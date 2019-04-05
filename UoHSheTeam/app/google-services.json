@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "212042127891",
+    "firebase_url": "https://uohsheteam.firebaseio.com",
+    "project_id": "uohsheteam",
+    "storage_bucket": "uohsheteam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212042127891:android:3e2f7985eca4c846",
+        "android_client_info": {
+          "package_name": "com.example.uohsheteam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212042127891-ovmba0kvgm439c0ii1v2fgseuqkh7opt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-TWzwAkt4RQzP4YvtkL8vr-SkKuK4VAY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
