@@ -42,9 +42,7 @@ public class MainActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Home.class);
-                startActivity(intent);
-                //validate(Username.getText().toString(), Password.getText().toString());
+                validate(Username.getText().toString(), Password.getText().toString());
 
             }
 
@@ -77,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void validate(String Username, String Password){
 
-        Toast.makeText(MainActivity.this, Username,Toast.LENGTH_SHORT).show();
-        Toast.makeText(MainActivity.this, Password,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, Username,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, Password,Toast.LENGTH_SHORT).show();
 
 
         progressDialog.setMessage("Verifying Credentials");
@@ -95,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 else{
+                    progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, "Login Failed",Toast.LENGTH_SHORT).show();
                 }
             }

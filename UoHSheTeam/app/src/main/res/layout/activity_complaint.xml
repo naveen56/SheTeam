@@ -9,8 +9,8 @@
 
     <EditText
         android:id="@+id/compliant_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="290dp"
+        android:layout_height="129dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -18,7 +18,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="Complaint"
+        android:hint="Write you compliant here"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
 
     <TextView
         android:id="@+id/location"
-        android:layout_width="137dp"
+        android:layout_width="301dp"
         android:layout_height="32dp"
         android:layout_marginStart="142dp"
         android:layout_marginLeft="142dp"
@@ -57,11 +57,11 @@
         android:layout_marginEnd="191dp"
         android:layout_marginRight="191dp"
         android:layout_marginBottom="161dp"
-        android:text="location"
+        android:text="Msg will be sent to Police with current location coordinates!!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.39"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnsend"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.074" />
 </android.support.constraint.ConstraintLayout>

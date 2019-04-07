@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,13 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.List;
@@ -78,7 +86,7 @@ public class Complaint extends AppCompatActivity implements LocationListener {
         int permission1 = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION);
         int permission2 = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Sorry ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Sorry ", Toast.LENGTH_SHORT).show();
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 11);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 12);
@@ -87,14 +95,14 @@ public class Complaint extends AppCompatActivity implements LocationListener {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            Toast.makeText(this, "Network_provider ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Network_provider ", Toast.LENGTH_SHORT).show();
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
-                    txtLat = (TextView) findViewById(R.id.location);
-                    txtLat.setText("location"+latitude);
+                    //txtLat = (TextView) findViewById(R.id.location);
+                    //txtLat.setText("location"+latitude);
 
 
                 }
@@ -115,7 +123,7 @@ public class Complaint extends AppCompatActivity implements LocationListener {
                 }
             });
         } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(this, "Sorry ", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Sorry ", Toast.LENGTH_SHORT).show();
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
@@ -151,8 +159,8 @@ public class Complaint extends AppCompatActivity implements LocationListener {
             if(location2!=null)
                 break;
         }
-        SmsManager sms = SmsManager.getDefault();
-        String message = complaint.getText().toString().trim();
+        final SmsManager sms = SmsManager.getDefault();
+         String message = complaint.getText().toString().trim();
 
         if(location2!=null) {
             message+="\nLocation url:\n";
@@ -161,7 +169,39 @@ public class Complaint extends AppCompatActivity implements LocationListener {
             message+= "https://www.google.com/maps/@"+lattitude+","+longitude+",13z";
 
         }
+        final String message_to_send = message;
+        FirebaseAuth firebaseAuth =FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                                                              .getReference()
+                                                               .child(firebaseUser.getUid());
+         String phonenumber = null;
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                    String ph1 = dataSnapshot.child("ph1").getValue().toString();
+                String ph2 = dataSnapshot.child("ph2").getValue().toString();
+                String ph3 = dataSnapshot.child("ph3").getValue().toString();
+                String ph4 = dataSnapshot.child("ph4").getValue().toString();
+                sms.sendTextMessage(ph1, null,message_to_send, null, null);
+
+                sms.sendTextMessage(ph2, null,message_to_send, null, null);
+                sms.sendTextMessage(ph3, null,message_to_send, null, null);
+                sms.sendTextMessage(ph4, null,message_to_send, null, null);
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //Toast.makeText(this,databaseReference.child(firebaseUser.getUid()).toString(),Toast.LENGTH_LONG).show();
         //message = message+"Location Coordinates \nlongitude:"+longitude+"\nlatitude:"+latitude;
         sms.sendTextMessage(police, null,message, null, null);
 
